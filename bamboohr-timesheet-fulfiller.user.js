@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  Script to fulfiller the Bamboohr timesheet monthly
 // @author       Sergio Susa (sergio@sergiosusa.com)
-// @match        https://seatcode.bamboohr.com/employees/timesheet/?id=479
+// @match        https://seatcode.bamboohr.com/employees/timesheet/?id=*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bamboohr.com
 // @grant        GM.getValue
 // @grant        GM.setValue
