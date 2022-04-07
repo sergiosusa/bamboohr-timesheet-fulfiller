@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bamboohr Timesheet Fulfiller
 // @namespace    bamboohr.timesheet
-// @version      0.2
+// @version      0.3
 // @description  Script to fulfiller the Bamboohr timesheet monthly
 // @author       Sergio Susa (sergio@sergiosusa.com)
 // @match        https://seatcode.bamboohr.com/employees/timesheet/?id=*
@@ -17,7 +17,7 @@ const SCHEDULE_TEMPLATE = {
             end: '17:30'
         }
     ],
-    'fri':[
+    'Fri':[
         {
             start: '9:15',
             end: '14:00'
