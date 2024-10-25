@@ -39,7 +39,7 @@ const DEFAULT_ENTROPY_MINUTES = 15;
 
 function BambooHr() {
     this.render = () => {
-        let optionContainer = document.querySelector(".TimesheetSummary");
+        let optionContainer = document.querySelector(".TimesheetSummary__dailyGraph");
 
         optionContainer.innerHTML =
             '<div class="TimesheetSummary__clockButtonWrapper">' +
