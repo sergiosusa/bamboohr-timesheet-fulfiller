@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bamboohr Timesheet Fulfiller
 // @namespace    bamboohr.timesheet
-// @version      0.4
+// @version      0.5
 // @description  Script to fulfiller the Bamboohr timesheet monthly
 // @author       Sergio Susa (sergio@sergiosusa.com)
 // @match        https://*.bamboohr.com/employees/timesheet/?id=*
