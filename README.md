@@ -18,7 +18,7 @@ This script add extra options on the timesheet in the BambooHr platform.
 
 That's it!
 
-Enter to the timesheet page in the bamboohr page and you will see two new buttons inyected: 
+Enter to the timesheet page in the bamboohr website and you will see two new buttons inyected: 
 
 <img width="289" alt="image" src="https://github.com/user-attachments/assets/d1e231b1-edc2-44c5-9c53-dd4e016a5bd0" />
 
