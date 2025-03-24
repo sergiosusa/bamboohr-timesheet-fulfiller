@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bamboohr Timesheet Fulfiller
 // @namespace    bamboohr.timesheet
-// @version      0.5
+// @version      0.6
 // @description  Script to fulfiller the Bamboohr timesheet monthly
 // @author       Sergio Susa (sergio@sergiosusa.com)
 // @match        https://*.bamboohr.com/employees/timesheet/?id=*
@@ -41,6 +41,10 @@ function BambooHr() {
     this.render = () => {
         let optionContainer = document.querySelector(".TimesheetSummary__dailyGraph");
 
+        if(!optionContainer){
+            return;
+        }
+        
         optionContainer.innerHTML =
             '<div class="TimesheetSummary__clockButtonWrapper">' +
             '   <button id="fillBtn" type="button" class="fab-Button fab-Button--small fab-Button--width100">Fill Month</button>' +
