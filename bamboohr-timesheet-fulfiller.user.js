@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bamboohr Timesheet Fulfiller
 // @namespace    bamboohr.timesheet
-// @version      0.7
+// @version      0.8
 // @description  Script to fulfiller the Bamboohr timesheet monthly
 // @author       Sergio Susa (sergio@sergiosusa.com)
 // @match        https://*.bamboohr.com/employees/timesheet/?id=*
@@ -19,7 +19,7 @@ const SCHEDULE_TEMPLATE = {
     ],
     'Fri':[
         {
-            start: '9:15',
+            start: '8:15',
             end: '14:00'
         }
     ]
@@ -39,7 +39,7 @@ const DEFAULT_ENTROPY_MINUTES = 15;
 
 function BambooHr() {
     this.render = () => {
-        let optionContainer = document.querySelector(".TimesheetSummary__dailyGraph");
+        let optionContainer = document.querySelector(".TimesheetEntries");
 
         if(!optionContainer){
             return;
@@ -50,12 +50,13 @@ function BambooHr() {
         optionContainer.style.gap = "20px";
 
         optionContainer.innerHTML =
+            '<div style="display:flex;flex-direction:row;justify-content: center;gap: 15px;">' +
             '<div class="TimesheetSummary__clockButtonWrapper">' +
             '   <button id="fillBtn" type="button" class="fab-Button fab-Button--small fab-Button--width100">Fill Month</button>' +
             '</div>' +
             '<div class="TimesheetSummary__clockButtonWrapper">' +
             '   <button id="unfillBtn"  type="button" class="fab-Button fab-Button--small fab-Button--width100">Unfill Month</button>' +
-            '</div>' + optionContainer.innerHTML;
+            '</div>' + '</div>' + optionContainer.innerHTML;
 
         document.querySelector("#fillBtn").onclick = this.fill;
         document.querySelector("#unfillBtn").onclick = this.unfill;
