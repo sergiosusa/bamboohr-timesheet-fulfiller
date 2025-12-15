@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bamboohr Timesheet Fulfiller
 // @namespace    bamboohr.timesheet
-// @version      0.8
+// @version      0.9
 // @description  Script to fulfiller the Bamboohr timesheet monthly
 // @author       Sergio Susa (sergio@sergiosusa.com)
 // @match        https://*.bamboohr.com/employees/timesheet/?id=*
@@ -49,14 +49,28 @@ function BambooHr() {
         optionContainer.style.flexDirection = "column";
         optionContainer.style.gap = "20px";
 
-        optionContainer.innerHTML =
-            '<div style="display:flex;flex-direction:row;justify-content: center;gap: 15px;">' +
-            '<div class="TimesheetSummary__clockButtonWrapper">' +
-            '   <button id="fillBtn" type="button" class="fab-Button fab-Button--small fab-Button--width100">Fill Month</button>' +
-            '</div>' +
-            '<div class="TimesheetSummary__clockButtonWrapper">' +
-            '   <button id="unfillBtn"  type="button" class="fab-Button fab-Button--small fab-Button--width100">Unfill Month</button>' +
-            '</div>' + '</div>' + optionContainer.innerHTML;
+        const wrapper = document.createElement('div');
+        wrapper.style.display = 'flex';
+        wrapper.style.flexDirection = 'row';
+        wrapper.style.justifyContent = 'center';
+        wrapper.style.gap = '15px';
+
+        wrapper.innerHTML = `
+          <div class="TimesheetSummary__clockButtonWrapper">
+            <button id="fillBtn" type="button"
+              class="fab-Button fab-Button--small fab-Button--width100">
+              Fill Month
+            </button>
+          </div>
+          <div class="TimesheetSummary__clockButtonWrapper">
+            <button id="unfillBtn" type="button"
+              class="fab-Button fab-Button--small fab-Button--width100">
+              Unfill Month
+            </button>
+          </div>
+        `;
+
+        optionContainer.prepend(wrapper);
 
         document.querySelector("#fillBtn").onclick = this.fill;
         document.querySelector("#unfillBtn").onclick = this.unfill;
