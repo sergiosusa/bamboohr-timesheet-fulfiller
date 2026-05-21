@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bamboohr Timesheet Fulfiller
 // @namespace    bamboohr.timesheet
-// @version      0.9
+// @version      0.10
 // @description  Script to fulfiller the Bamboohr timesheet monthly
 // @author       Sergio Susa (sergio@sergiosusa.com)
 // @match        https://*.bamboohr.com/employees/timesheet/?id=*
@@ -13,25 +13,35 @@
 const SCHEDULE_TEMPLATE = {
     'default': [
         {
-            start: '9:15',
+            start: '9:00',
             end: '17:30'
         }
     ],
     'Fri':[
         {
             start: '8:15',
-            end: '14:00'
+            end: '14:15'
         }
     ]
 };
 
 const DEFAULT_ENTROPY_MINUTES = 15;
+const bambooLoadChecker = null;
 
 (function () {
     'use strict';
     try {
-        let bambooHr = new BambooHr();
-        bambooHr.render();
+
+        const bambooLoadChecker = setInterval(() => {
+            let bambooHr = new BambooHr();
+            bambooHr.render();
+
+            if (document.documentElement.dataset.bambooHelper === "loaded") {
+                clearInterval(bambooLoadChecker);
+            }
+
+        });
+        
     } catch (exception) {
         alert(exception);
     }
@@ -74,6 +84,9 @@ function BambooHr() {
 
         document.querySelector("#fillBtn").onclick = this.fill;
         document.querySelector("#unfillBtn").onclick = this.unfill;
+        document.documentElement.dataset.bambooHelper = "loaded";
+
+
     };
 
     this.fill = () => {
