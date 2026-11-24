@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bamboohr Timesheet Fulfiller
 // @namespace    bamboohr.timesheet
-// @version      0.10
+// @version      0.11
 // @description  Script to fulfiller the Bamboohr timesheet monthly
 // @author       Sergio Susa (sergio@sergiosusa.com)
 // @match        https://*.bamboohr.com/employees/timesheet/?id=*
@@ -89,8 +89,42 @@ function BambooHr() {
 
     };
 
-    this.fill = () => {
-        let timesheetData = JSON.parse(document.getElementById('js-timesheet-data').innerHTML);
+    /* Newer BambooHR versions no longer embed #js-timesheet-data; the page loads it from an API instead */
+    this.getTimesheetData = async () => {
+        const el = document.getElementById('js-timesheet-data');
+        if (el) {
+            return JSON.parse(el.innerHTML);
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = new URLSearchParams();
+        if (urlParams.get('et_id')) {
+            query.set('employeeTimesheetId', urlParams.get('et_id'));
+        } else {
+            query.set('employeeId', urlParams.get('id') || String(unsafeWindow.currentlyEditingEmployeeId));
+            if (urlParams.get('pay_cycle_id')) {
+                query.set('payCycleId', urlParams.get('pay_cycle_id'));
+            }
+        }
+
+        const res = await fetch(
+            `${window.location.origin}/api/v1/time-tracking/timesheets/employee-timesheet-tab?${query}`,
+            {credentials: 'same-origin', headers: {Accept: 'application/json'}}
+        );
+        if (!res.ok) {
+            throw new Error(`Could not load timesheet data (HTTP ${res.status}).`);
+        }
+        return await res.json();
+    };
+
+    this.fill = async () => {
+        let timesheetData;
+        try {
+            timesheetData = await this.getTimesheetData();
+        } catch (err) {
+            alert(`${err}`);
+            return false;
+        }
         let tracking_id = 0;
         let skipped = [];
         let entries = [];
@@ -171,9 +205,15 @@ function BambooHr() {
         return false;
     };
 
-    this.unfill = () => {
+    this.unfill = async () => {
 
-        let tsd = JSON.parse(document.getElementById('js-timesheet-data').innerHTML);
+        let tsd;
+        try {
+            tsd = await this.getTimesheetData();
+        } catch (err) {
+            alert(`${err}`);
+            return false;
+        }
         let entries = [];
 
         /* Grab all entries ids */
